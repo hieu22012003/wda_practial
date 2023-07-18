@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using THcode.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using THcode.Models;
+
 
 namespace THcode.Controllers
 {

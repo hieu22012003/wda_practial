@@ -1,0 +1,82 @@
+﻿@model IEnumerable<THcode.Entities.Contact>
+
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Contact List</h1>
+
+<p>
+    <button class="btn btn-outline-primary"><a asp-action="Create">Create New Contact</a></button>
+</p>
+
+@using (Html.BeginForm("Index", "Contact", FormMethod.Get))
+{
+    <p>
+        Search: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<p><i>(Click on "Contact Name" to sort)</i></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["NameSortParam"]"
+                   asp-route-searchString="@ViewData["CurrentFilter"]">
+                    Contact Name
+                    @if (String.IsNullOrEmpty(ViewData["NameSortParam"] as string))
+                    {
+                        <span>&darr;</span> <!-- Arrow down for ascending order -->
+                    }
+                    else if (ViewData["NameSortParam"].ToString() == "name_desc")
+                    {
+                        <span>&uarr;</span> <!-- Arrow up for descending order -->
+                    }
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HireDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
